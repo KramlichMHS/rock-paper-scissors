@@ -29,6 +29,8 @@ input.onButtonPressed(Button.A, function on_button_pressed_a() {
     
     if (you > 0) {
         you -= 1
+    } else {
+        you = 2
     }
     
 })
@@ -36,6 +38,8 @@ input.onButtonPressed(Button.B, function on_button_pressed_b() {
     
     if (you < 2) {
         you += 1
+    } else {
+        you = 0
     }
     
 })
