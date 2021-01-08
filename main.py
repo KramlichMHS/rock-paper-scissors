@@ -7,11 +7,11 @@ check = False
 radio.set_group(3)
 
 def on_forever():
-    global check, waiting, choose
+    global check, waiting, choose, send, other
     if choose:
-        basic.show_string(currentlyOn(you))
+        currentlyOn(you)
     elif waiting:
-        basic.show_string("...")
+        basic.show_string("..")
         if send != -1 and other != -1:
             waiting = False
             check = True
@@ -19,6 +19,8 @@ def on_forever():
         basic.show_string(checkWin(send, other))
         check = False
         choose = True
+        send = -1
+        other = -1
     else:
         basic.show_string("Error")
 basic.forever(on_forever)
@@ -40,11 +42,14 @@ def on_button_pressed_b():
 input.on_button_pressed(Button.B, on_button_pressed_b)
 
 def on_button_pressed_ab():
-    global you, send, choose, waiting
+    global you, send, choose, waiting, check
     send = you
     radio.send_number(send)
     choose = False
-    waiting = True
+    if other == -1:
+        waiting = True
+    else:
+        check = True
 input.on_button_pressed(Button.AB, on_button_pressed_ab)
 
 def on_received_number(receivedNumber):
@@ -54,11 +59,29 @@ radio.on_received_number(on_received_number)
 
 def currentlyOn(choice):
     if choice == 0:
-        return "Rock"
+        basic.show_leds("""
+        . . . . .
+        . # # # .
+        . # # # .
+        . # # # .
+        . . . . .
+        """)
     elif choice == 1:
-        return "Paper"
+        basic.show_leds("""
+        # # # # #
+        # . . . #
+        # . . . #
+        # . . . #
+        # # # # #
+        """)
     else:
-        return "Scissors"
+        basic.show_leds("""
+        # # . . #
+        # # . # .
+        . . # . .
+        # # . # .
+        # # . . #
+        """)
 
 def checkWin(p1, p2):
     if p1 == -1 or p2 == -1:

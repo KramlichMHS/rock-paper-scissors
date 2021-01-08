@@ -8,9 +8,9 @@ radio.setGroup(3)
 basic.forever(function on_forever() {
     
     if (choose) {
-        basic.showString(currentlyOn(you))
+        currentlyOn(you)
     } else if (waiting) {
-        basic.showString("...")
+        basic.showString("..")
         if (send != -1 && other != -1) {
             waiting = false
             check = true
@@ -20,6 +20,8 @@ basic.forever(function on_forever() {
         basic.showString(checkWin(send, other))
         check = false
         choose = true
+        send = -1
+        other = -1
     } else {
         basic.showString("Error")
     }
@@ -48,19 +50,42 @@ input.onButtonPressed(Button.AB, function on_button_pressed_ab() {
     send = you
     radio.sendNumber(send)
     choose = false
-    waiting = true
+    if (other == -1) {
+        waiting = true
+    } else {
+        check = true
+    }
+    
 })
 radio.onReceivedNumber(function on_received_number(receivedNumber: number) {
     
     other = receivedNumber
 })
-function currentlyOn(choice: number): string {
+function currentlyOn(choice: number) {
     if (choice == 0) {
-        return "Rock"
+        basic.showLeds(`
+        . . . . .
+        . # # # .
+        . # # # .
+        . # # # .
+        . . . . .
+        `)
     } else if (choice == 1) {
-        return "Paper"
+        basic.showLeds(`
+        # # # # #
+        # . . . #
+        # . . . #
+        # . . . #
+        # # # # #
+        `)
     } else {
-        return "Scissors"
+        basic.showLeds(`
+        # # . . #
+        # # . # .
+        . . # . .
+        # # . # .
+        # # . . #
+        `)
     }
     
 }
