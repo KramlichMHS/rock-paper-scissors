@@ -17,7 +17,7 @@ basic.forever(function on_forever() {
         }
         
     } else if (check) {
-        basic.showString(checkWin(send, other))
+        checkWin(send, other)
         check = false
         choose = true
         send = -1
@@ -90,21 +90,17 @@ function currentlyOn(choice: number) {
     
 }
 
-function checkWin(p1: any, p2: any): string {
-    if (p1 == -1 || p2 == -1) {
-        return "Error"
-    }
-    
+function checkWin(p1: any, p2: any) {
     if (p1 == p2) {
-        return "Tie..."
+        basic.showIcon(IconNames.Triangle, 2000)
     } else if (p1 == 0 && p2 == 2) {
-        return "You Win!"
+        basic.showIcon(IconNames.Happy, 2000)
     } else if (p1 == 1 && p2 == 0) {
-        return "You Win!"
+        basic.showIcon(IconNames.Happy, 2000)
     } else if (p1 == 2 && p2 == 1) {
-        return "You Win!"
+        basic.showIcon(IconNames.Happy, 2000)
     } else {
-        return "You Lose!"
+        basic.showIcon(IconNames.Sad, 2000)
     }
     
 }

@@ -16,7 +16,7 @@ def on_forever():
             waiting = False
             check = True
     elif check:
-        basic.show_string(checkWin(send, other))
+        checkWin(send, other)
         check = False
         choose = True
         send = -1
@@ -84,15 +84,13 @@ def currentlyOn(choice):
         """)
 
 def checkWin(p1, p2):
-    if p1 == -1 or p2 == -1:
-        return "Error"
     if p1 == p2:
-        return "Tie..."
+        basic.show_icon(IconNames.TRIANGLE,2000)
     elif p1 == 0 and p2 == 2:
-        return "You Win!"
+        basic.show_icon(IconNames.HAPPY,2000)
     elif p1 == 1 and p2 == 0:
-        return "You Win!"
+        basic.show_icon(IconNames.HAPPY,2000)
     elif p1 == 2 and p2 == 1:
-        return "You Win!"
+        basic.show_icon(IconNames.HAPPY,2000)
     else:
-        return "You Lose!"
+        basic.show_icon(IconNames.SAD,2000)
